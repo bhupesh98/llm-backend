@@ -1,0 +1,6 @@
+## Cache ##
+__pycache__
+
+## ENV files ##
+.env*
+!.env.example
