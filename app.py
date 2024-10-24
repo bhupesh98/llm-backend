@@ -40,12 +40,12 @@ async def get_genes_and_citations():
             stream=True
         )
 
-        response = ""
-        for chunk in completion:
-            if chunk.choices[0].delta.content is not None:
-                response += chunk.choices[0].delta.content
-        # Return the response
-        return response, 200
+        def generateResponse():
+            for chunk in completion:
+                if chunk.choices[0].delta.content is not None:
+                    yield chunk.choices[0].delta.content
+
+        return Response(generateResponse(),200,content_type='text/event-stream')
 
 
     except Exception as e:
