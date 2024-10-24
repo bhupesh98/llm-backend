@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, Response, request
 from flask_cors import CORS
 import os
 from openai import OpenAI
@@ -15,7 +15,7 @@ client = OpenAI(
 
 # Endpoint to handle LLM request
 @app.route('/llm/chat', methods=['POST'])
-def get_genes_and_citations():
+async def get_genes_and_citations():
     data = request.get_json()
 
     # Extract user input from the POST request
@@ -32,11 +32,11 @@ def get_genes_and_citations():
     try:
         # Interact with the LLM model
         completion = client.chat.completions.create(
-            model="meta/llama-3.1-405b-instruct",
+            model="meta/llama-3.1-70b-instruct",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
             top_p=0.7,
-            max_tokens=1024,
+            max_tokens=512,
             stream=True
         )
 
@@ -46,6 +46,7 @@ def get_genes_and_citations():
                 response += chunk.choices[0].delta.content
         # Return the response
         return response, 200
+
 
     except Exception as e:
         return str(e), 500

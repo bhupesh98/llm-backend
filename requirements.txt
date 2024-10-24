@@ -1,3 +1,4 @@
-flask==3.0.3
+Flask[async]==3.0.3
 flask-Cors==4.0.1
 openai==1.35.13
+gunicorn==23.0.0
