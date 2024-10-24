@@ -32,11 +32,11 @@ async def get_genes_and_citations():
     try:
         # Interact with the LLM model
         completion = client.chat.completions.create(
-            model="meta/llama-3.1-70b-instruct",
+            model="meta/llama-3.1-405b-instruct",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
             top_p=0.7,
-            max_tokens=512,
+            max_tokens=1024,
             stream=True
         )
 
